@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Services{% endblock title %}
+
+{% block body %} 
+<style>
+  /* Services section */
+  #services-section {
+    background-color: #1b042b;
+    color: #eee;
+    padding: 3rem 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  #services-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    color: #ffc107;
+  }
+  .service-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+  }
+  .service-card {
+    background: #2c1a54;
+    border-radius: 15px;
+    padding: 1.8rem 1.5rem;
+    max-width: 280px;
+    box-shadow: 0 6px 15px rgba(255, 193, 7, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    color: #f5f5f5;
+    text-align: center;
+  }
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(255, 193, 7, 0.6);
+  }
+  .service-icon {
+    font-size: 3rem;
+    color: #ffc107;
+    margin-bottom: 1rem;
+  }
+  .service-title {
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+  }
+  .service-desc {
+    font-size: 0.95rem;
+    color: #ccc;
+  }
+
+  @media (max-width: 768px) {
+    .service-cards {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+
+<section id="services-section">
+  <h2>Our Services</h2>
+  <div class="service-cards">
+    <div class="service-card">
+      <div class="service-icon">🍦</div>
+      <div class="service-title">Fresh Ice Creams</div>
+      <div class="service-desc">
+        Made fresh daily with quality ingredients for creamy, delicious flavors you love.
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🚚</div>
+      <div class="service-title">Home Delivery</div>
+      <div class="service-desc">
+        Enjoy your favorite ice creams delivered to your doorstep, fresh and cold.
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎉</div>
+      <div class="service-title">Party Catering</div>
+      <div class="service-desc">
+        Special packages and custom flavors to make your celebrations sweeter.
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🛒</div>
+      <div class="service-title">Online Ordering</div>
+      <div class="service-desc">
+        Easy-to-use online platform to browse, select, and order your favorites quickly.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Footer (Full Width Without Bootstrap .row) -->
+<footer class="text-white py-5" style="background-color:rgb(16, 62, 102); width: 100%; margin: 0;">
+  <div class="container-fluid px-4 px-md-5">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+      
+      <!-- Company Info -->
+      <div class="mb-4" style="flex: 1 1 300px; min-width: 250px; padding-right: 20px;">
+        <h4>🍦Creamy Bliss Ice Cream</h4>
+        <p>
+         Creamy Bliss is your ultimate dessert destination, offering a wide variety of handcrafted flavors made fresh every day. Whether it's a casual treat or a celebration, we bring joy in every scoop!
+        </p>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="mb-4" style="flex: 1 1 300px; min-width: 250px; padding-right: 20px;">
+        <h4>Contact Us</h4>
+        <ul class="list-unstyled">
+          <li><strong>📍 Location:</strong> FC Road, Pune, Maharashtra, India</li>
+          <li><strong>📞 Phone:</strong> <a href="tel:+917066636718" class="text-white text-decoration-none">+91 70666 36718</a></li>
+          <li><strong>📧 Email:</strong> <a href="mailto:ajaytengale@gmail.com" class="text-white text-decoration-none">ajaytengale@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="mb-4" style="flex: 1 1 300px; min-width: 250px;">
+        <h4>Opening Hours</h4>
+        <ul class="list-unstyled">
+          <li>Mon - Fri: 11:00 AM – 10:00 PM</li>
+          <li>Sat - Sun: 10:00 AM – 11:00 PM</li>
+        </ul>
+
+        <h4 class="mt-4">Follow Us</h4>
+        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-5"></i></a>
+        <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-5"></i></a>
+        <a href="#" class="text-white"><i class="bi bi-twitter fs-5"></i></a>
+      </div>
+
+    </div>
+
+    <hr class="border-light mt-4" />
+
+    <div class="text-center">
+      <p class="mb-0">&copy; 2025 Ajju's Ice Cream. Crafted with ❤ in Pune.</p>
+    </div>
+  </div>
+</footer>
+
+{% endblock body %}

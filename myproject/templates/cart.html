@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Your Cart{% endblock title %}
+
+{% block body %}
+
+<style>
+  body {
+    background: #f9fafc;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .cart-container {
+    max-width: 900px;
+    margin: 4rem auto;
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+  }
+
+  .cart-header {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #3a5068;
+  }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .item-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #3a5068;
+  }
+
+  .item-flavor {
+    font-size: 0.95rem;
+    color: #8898aa;
+  }
+
+  .item-qty {
+    font-weight: 600;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .qty-btn {
+    background: #5bc0be;
+    border: none;
+    color: white;
+    padding: 0 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    user-select: none;
+  }
+
+  .qty-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  .item-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #5bc0be;
+    min-width: 80px;
+    text-align: right;
+  }
+
+  .remove-btn {
+    background: transparent;
+    border: none;
+    color: #ff4c4c;
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .cart-summary {
+    text-align: right;
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #3a5068;
+  }
+
+  .btn-checkout {
+    background: linear-gradient(to right, #5bc0be, #3a5068);
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-checkout:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  .btn-checkout:hover:not(:disabled) {
+    background: linear-gradient(to right, #3a5068, #5bc0be);
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 600px) {
+    .cart-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    .cart-summary {
+      text-align: left;
+    }
+  }
+</style>
+
+<div class="cart-container">
+  <div class="cart-header">🛒 Your Ice Cream Cart</div>
+
+  {% if cart_items %}
+    {% for item in cart_items %}
+      <div class="cart-item" data-item-id="{{ item.id }}">
+        <div class="item-info">
+          <div class="item-name">{{ item.name }}</div>
+          <div class="item-flavor">Flavor: {{ item.flavor }}</div>
+          <div class="item-qty">
+            Quantity:
+            <button class="qty-btn decrement" type="button" {% if item.quantity <= 1 %}disabled{% endif %}>−</button>
+            <span class="qty-value">{{ item.quantity }}</span>
+            <button class="qty-btn increment" type="button">+</button>
+            <button class="remove-btn" type="button" title="Remove item">✕</button>
+          </div>
+        </div>
+        <div class="item-price">₹ <span class="item-total-price">{{ item.total_price }}</span></div>
+      </div>
+    {% endfor %}
+
+    <div class="cart-summary">
+      Total: ₹ <span id="cart-total">{{ cart_total }}</span>
+      <br />
+      <button class="btn-checkout" {% if cart_total == 0 %}disabled{% endif %}>Proceed to Checkout</button>
+    </div>
+  {% else %}
+    <p style="text-align:center; color:#888; font-size:1.1rem;">Your cart is empty! Add some creamy delights 🍨</p>
+  {% endif %}
+</div>
+
+<script>
+  // Helper function to update the cart total displayed
+  function updateCartTotal() {
+    let total = 0;
+    document.querySelectorAll('.item-price .item-total-price').forEach(priceEl => {
+      total += parseFloat(priceEl.textContent) || 0;
+    });
+    document.getElementById('cart-total').textContent = total.toFixed(2);
+    document.querySelector('.btn-checkout').disabled = total <= 0;
+  }
+
+  // Event delegation for qty buttons and remove button
+  document.querySelector('.cart-container').addEventListener('click', function (e) {
+    const target = e.target;
+    const cartItem = target.closest('.cart-item');
+    if (!cartItem) return;
+
+    const qtyValueEl = cartItem.querySelector('.qty-value');
+    let quantity = parseInt(qtyValueEl.textContent);
+    const pricePerUnit = parseFloat(cartItem.getAttribute('data-price-per-unit') || 0) || 0; // We'll assume you add this attribute server-side if possible
+
+    // Increment quantity
+    if (target.classList.contains('increment')) {
+      quantity++;
+      qtyValueEl.textContent = quantity;
+      updateItemTotal(cartItem, quantity);
+    }
+
+    // Decrement quantity
+    if (target.classList.contains('decrement')) {
+      if (quantity > 1) {
+        quantity--;
+        qtyValueEl.textContent = quantity;
+        updateItemTotal(cartItem, quantity);
+      }
+    }
+
+    // Remove item
+    if (target.classList.contains('remove-btn')) {
+      if (confirm('Are you sure you want to remove this item?')) {
+        cartItem.remove();
+        updateCartTotal();
+      }
+    }
+  });
+
+  // Function to update item total price based on quantity
+  function updateItemTotal(cartItem, quantity) {
+    // Here you need to get price per unit from backend or a data attribute
+    // For demo, let's get it from the current total divided by quantity (approximate)
+    const priceEl = cartItem.querySelector('.item-total-price');
+    let oldTotal = parseFloat(priceEl.textContent);
+    if (!oldTotal || quantity === 0) return;
+
+    // To get unit price, divide old total by old quantity (before change)
+    // We can store unit price in data attribute to be more accurate
+    const oldQty = parseInt(cartItem.querySelector('.qty-value').textContent);
+    // Instead, let's assume unit price is old total / oldQty before this change:
+    // We'll approximate, or ideally add a data-price-per-unit attribute server-side.
+    
+    // For demonstration, let's store unit price in data attribute:
+    let unitPrice = parseFloat(cartItem.getAttribute('data-unit-price'));
+    if (!unitPrice) {
+      unitPrice = oldTotal / quantity; // fallback (not perfect)
+      cartItem.setAttribute('data-unit-price', unitPrice);
+    }
+
+    const newTotal = unitPrice * quantity;
+    priceEl.textContent = newTotal.toFixed(2);
+    updateCartTotal();
+
+    // Disable decrement if quantity <= 1
+    const decrementBtn = cartItem.querySelector('.qty-btn.decrement');
+    decrementBtn.disabled = quantity <= 1;
+  }
+
+  // On page load, initialize unit price attribute for each cart item
+  document.querySelectorAll('.cart-item').forEach(item => {
+    const totalPriceEl = item.querySelector('.item-total-price');
+    const qty = parseInt(item.querySelector('.qty-value').textContent);
+    const totalPrice = parseFloat(totalPriceEl.textContent);
+    if (qty > 0 && totalPrice) {
+      item.setAttribute('data-unit-price', (totalPrice / qty).toFixed(2));
+    }
+  });
+</script>
+
+
+{% endblock body %}

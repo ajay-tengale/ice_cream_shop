@@ -1,0 +1,6 @@
+{% comment %} {% load static %}
+{% if messages %}
+  <script>
+    alert("{% for message in messages %}{{ message }}{% endfor %}");
+  </script>
+{% endif %} {% endcomment %}

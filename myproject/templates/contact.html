@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock title %}
+{% load static %}
+{% block body %} 
+
+<style>
+  body {
+    background: #f0f4f8;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .order-container {
+    max-width: 600px;
+    margin: 4rem auto;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s ease;
+  }
+  .order-container:hover {
+    transform: translateY(-10px);
+  }
+
+  h2 {
+    font-weight: 700;
+    color: #3a5068;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    letter-spacing: 1.5px;
+  }
+
+  .order-info {
+    background: #7fcd91;
+    color: #114b5f;
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 10px rgba(127, 205, 145, 0.4);
+  }
+
+  label {
+    font-weight: 600;
+    color: #3a5068;
+  }
+
+  input.form-control, select.form-select, textarea.form-control {
+    border: 2px solid #a7c7e7;
+    border-radius: 12px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: #3a5068;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  input.form-control::placeholder, textarea.form-control::placeholder {
+    color: #a7c7e7;
+  }
+
+  input.form-control:focus, select.form-select:focus, textarea.form-control:focus {
+    outline: none;
+    border-color: #3a5068;
+    box-shadow: 0 0 8px rgba(58, 80, 104, 0.6);
+  }
+
+  button.btn-submit {
+    background: linear-gradient(135deg, #3a5068, #5bc0be);
+    color: white;
+    font-weight: 700;
+    padding: 0.75rem 3rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(91, 192, 190, 0.4);
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: block;
+    margin: 2rem auto 0;
+  }
+
+  button.btn-submit:hover {
+    background: linear-gradient(135deg, #5bc0be, #3a5068);
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 576px) {
+    .order-container {
+      padding: 2rem 1.5rem;
+      margin: 2rem 1rem;
+    }
+    button.btn-submit {
+      width: 100%;
+      padding: 0.75rem 0;
+    }
+  }
+</style>
+
+<div class="order-container shadow">
+  <h2>🍦 Place Your Ice Cream Order</h2>
+  
+  <div class="order-info">
+    Freshness guaranteed! Order your favorite flavor and get it delivered with a smile.
+  </div>
+
+  <form method="post" action="/contact/"> 
+    {% csrf_token %}
+
+    <!-- Name -->
+    <div class="mb-4">
+      <label for="customerName" class="form-label">Full Name</label>
+      <input type="text" class="form-control" id="customerName" name="name" placeholder="Enter your full name" required>
+    </div>
+
+    <!-- Phone -->
+    <div class="mb-4">
+      <label for="phone" class="form-label">Phone Number</label>
+      <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+    </div>
+
+    <!-- Ice Cream Flavor -->
+    <div class="mb-4">
+      <label for="flavor" class="form-label">Select Ice Cream Flavor</label>
+      <select class="form-select" id="flavor" name="flavor" required>
+        <option selected disabled value="">Choose a flavor...</option>
+        <option>Vanilla</option>
+        <option>Chocolate</option>
+        <option>Strawberry</option>
+        <option>Mango</option>
+        <option>Cookies & Cream</option>
+        <option>Butterscotch</option>
+      </select>
+    </div>
+
+    <!-- Quantity -->
+    <div class="mb-4">
+      <label for="quantity" class="form-label">Quantity</label>
+      <input type="number" class="form-control" id="quantity" name="quantity" min="1" value="1" required>
+    </div>
+
+    <!-- Delivery Address -->
+    <div class="mb-4">
+      <label for="address" class="form-label">Delivery Address</label>
+      <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter delivery address" required></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn-submit">Submit Order</button>
+  </form>
+</div>
+
+{% endblock body %}

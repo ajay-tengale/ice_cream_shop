@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Flavors{% endblock title %}
+
+{% block body %}
+<style>
+  body {
+    background: #fff8fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    padding-bottom: 50px;
+  }
+
+  .section-title {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 3.8rem;
+    color: #ff4081;
+    text-align: center;
+    margin: 3rem 0 4rem;
+    letter-spacing: 2px;
+  }
+
+  .flavor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .flavor-card {
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(255, 64, 129, 0.15);
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .flavor-card:hover {
+    box-shadow: 0 18px 40px rgba(255, 64, 129, 0.4);
+    transform: translateY(-12px);
+  }
+
+  .flavor-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    transition: transform 0.5s ease;
+  }
+
+  .flavor-card:hover .flavor-img {
+    transform: scale(1.12);
+  }
+
+  .flavor-info {
+    padding: 20px 25px;
+    text-align: center;
+  }
+
+  .flavor-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #e91e63;
+    margin-bottom: 10px;
+  }
+
+  .flavor-desc {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 18px;
+    min-height: 70px;
+  }
+
+  .price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ff4081;
+    margin-bottom: 20px;
+  }
+
+  .btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-decoration: none;
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 64, 129, 0.3);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .btn-add {
+    background: linear-gradient(135deg, #ff4081, #f50057);
+  }
+
+  .btn-add:hover {
+    background: linear-gradient(135deg, #f50057, #c51162);
+    box-shadow: 0 8px 25px rgba(197, 17, 98, 0.6);
+  }
+
+  .btn-buy {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+  }
+
+  .btn-buy:hover {
+    background: linear-gradient(135deg, #f57c00, #ef6c00);
+    box-shadow: 0 8px 25px rgba(239, 108, 0, 0.6);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .flavor-img {
+      height: 180px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .btn-group {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+</style>
+
+<div>
+  <h2 class="section-title">Discover Our Delightful Ice Cream Flavors</h2>
+
+  <div class="flavor-grid">
+    <!-- Flavor 1 -->
+    <div class="flavor-card">
+      <img src="{% static 'flavor11.jpeg' %}" alt="Chocolate" class="flavor-img" />
+      <div class="flavor-info">
+        <h3 class="flavor-name">Chocolate Delight</h3>
+        <p class="flavor-desc">Rich, creamy chocolate ice cream made from the finest cocoa beans.</p>
+        <p class="price">₹150</p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-add">Add to Cart</a>
+          <a href="#" class="btn btn-buy">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flavor 2 -->
+    <div class="flavor-card">
+      <img src="{% static 'flavor1.jpeg' %}" alt="Vanilla" class="flavor-img" />
+      <div class="flavor-info">
+        <h3 class="flavor-name">Classic Vanilla</h3>
+        <p class="flavor-desc">Smooth and creamy vanilla ice cream with a hint of Madagascar vanilla bean.</p>
+        <p class="price">₹130</p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-add">Add to Cart</a>
+          <a href="#" class="btn btn-buy">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flavor 3 -->
+    <div class="flavor-card">
+      <img src="{% static 'flavor6.jpeg' %}" alt="Strawberry" class="flavor-img" />
+      <div class="flavor-info">
+        <h3 class="flavor-name">Strawberry Swirl</h3>
+        <p class="flavor-desc">Fresh strawberry ice cream with swirls of real strawberry sauce.</p>
+        <p class="price">₹160</p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-add">Add to Cart</a>
+          <a href="#" class="btn btn-buy">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flavor 4 -->
+    <div class="flavor-card">
+      <img src="{% static 'mango.jpeg' %}" alt="Mango" class="flavor-img" />
+      <div class="flavor-info">
+        <h3 class="flavor-name">Mango Mania</h3>
+        <p class="flavor-desc">Sweet and tangy mango ice cream, perfect for summer days.</p>
+        <p class="price">₹140</p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-add">Add to Cart</a>
+          <a href="#" class="btn btn-buy">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flavor 5 -->
+    <div class="flavor-card">
+      <img src="{% static 'flavor4.jpeg' %}" alt="Oreo" class="flavor-img" />
+      <div class="flavor-info">
+        <h3 class="flavor-name">Oreo Crunch</h3>
+        <p class="flavor-desc">Creamy vanilla ice cream loaded with crunchy Oreo cookie bits.</p>
+        <p class="price">₹170</p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-add">Add to Cart</a>
+          <a href="#" class="btn btn-buy">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flavor 6 -->
+    <div class="flavor-card">
+      <img src="{% static 'flavor5.jpeg' %}" alt="Pistachio" class="flavor-img" />
+      <div class="flavor-info">
+        <h3 class="flavor-name">Pistachio Dream</h3>
+        <p class="flavor-desc">Smooth pistachio ice cream with a nutty, rich flavor.</p>
+        <p class="price">₹180</p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-add">Add to Cart</a>
+          <a href="#" class="btn btn-buy">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flavor 7 -->
+    <div class="flavor-card">
+      <img src="{% static 'flavor7.jpeg' %}" alt="Caramel" class="flavor-img" />
+      <div class="flavor-info">
+        <h3 class="flavor-name">Caramel Craze</h3>
+        <p class="flavor-desc">Buttery caramel ice cream with ribbons of golden caramel sauce.</p>
+        <p class="price">₹165</p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-add">Add to Cart</a>
+          <a href="#" class="btn btn-buy">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flavor 8 -->
+    <div class="flavor-card">
+      <img src="{% static 'flavor8.jpeg' %}" alt="Blueberry" class="flavor-img" />
+      <div class="flavor-info">
+        <h3 class="flavor-name">Blueberry Bliss</h3>
+        <p class="flavor-desc">Refreshing blueberry ice cream with bursts of real berries in every bite.</p>
+        <p class="price">₹175</p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-add">Add to Cart</a>
+          <a href="#" class="btn btn-buy">Buy Now</a>
+        </div>
+      </div>
+    </div>
+
+   <div class="flavor-card">
+  <img src="{% static 'home2.jpeg' %}" alt="Butterscotch" class="flavor-img" />
+  <div class="flavor-info">
+    <h3 class="flavor-name">Butterscotch Burst</h3>
+    <p class="flavor-desc">Creamy butterscotch ice cream topped with caramel bits and golden crunch.</p>
+    <p class="price">₹134</p>
+    <div class="btn-group">
+      <a href="#" class="btn btn-add">Add to Cart</a>
+      <a href="#" class="btn btn-buy">Buy Now</a>
+    </div>
+  </div>
+</div>
+
+
+       
+{% endblock body %}
